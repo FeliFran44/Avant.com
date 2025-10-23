@@ -93,37 +93,74 @@ window.addEventListener('load', revealOnScroll);
 window.addEventListener('scroll', revealOnScroll);
 
 // ========================================
-// FORM SUBMISSION
+// TEAM MODAL
 // ========================================
 
-const contactForm = document.getElementById('contactForm');
+const teamMembers = document.querySelectorAll('.team-member');
+const teamModal = document.getElementById('teamModal');
+const modalClose = document.getElementById('modalClose');
+const modalImage = document.getElementById('modalImage');
+const modalName = document.getElementById('modalName');
+const modalRole = document.getElementById('modalRole');
+const modalSpecialty = document.getElementById('modalSpecialty');
+const modalBio = document.getElementById('modalBio');
+const modalFocus = document.getElementById('modalFocus');
+const modalCTA = document.getElementById('modalCTA');
+const modalCTAText = document.getElementById('modalCTAText');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form values
-    const formData = new FormData(contactForm);
-    
-    // Simulate form submission
-    const submitButton = contactForm.querySelector('.btn-submit');
-    const originalText = submitButton.textContent;
-    
-    submitButton.textContent = 'Sending...';
-    submitButton.disabled = true;
-    
-    // Simulate API call
-    setTimeout(() => {
-        submitButton.textContent = 'Message Sent!';
+// WhatsApp reception number
+const whatsappNumber = '59898213627';
+
+// Open modal when clicking team member
+teamMembers.forEach(member => {
+    member.addEventListener('click', () => {
+        const name = member.dataset.name;
+        const role = member.dataset.role;
+        const specialty = member.dataset.specialty;
+        const image = member.dataset.image;
+        const bio = member.dataset.bio;
+        const focus = member.dataset.focus;
         
-        // Reset form
-        contactForm.reset();
+        // Populate modal with data
+        modalImage.style.backgroundImage = `url('${image}')`;
+        modalName.textContent = name;
+        modalRole.textContent = role;
+        modalSpecialty.textContent = specialty;
+        modalBio.innerHTML = bio;
+        modalFocus.innerHTML = focus;
         
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-        }, 3000);
-    }, 1500);
+        // Update CTA button
+        modalCTAText.textContent = `Atender con ${name.split(' ').slice(1).join(' ')}`;
+        const whatsappMessage = `Hola, Quiero atenderme con ${name}`;
+        modalCTA.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+        modalCTA.target = '_blank';
+        
+        // Show modal
+        teamModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+// Close modal
+const closeModal = () => {
+    teamModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+};
+
+modalClose.addEventListener('click', closeModal);
+
+// Close modal when clicking outside
+teamModal.addEventListener('click', (e) => {
+    if (e.target === teamModal) {
+        closeModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && teamModal.classList.contains('active')) {
+        closeModal();
+    }
 });
 
 // ========================================
