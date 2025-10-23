@@ -51,19 +51,28 @@ document.addEventListener('click', (e) => {
 // SMOOTH SCROLL
 // ========================================
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        
-        if (target) {
-            const offsetTop = target.offsetTop - 80; // Account for navbar height
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
             
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
+            // Ignore if it's just "#" or if it's the modal CTA button
+            if (!href || href === '#' || this.id === 'modalCTA') {
+                return;
+            }
+            
+            e.preventDefault();
+            const target = document.querySelector(href);
+            
+            if (target) {
+                const offsetTop = target.offsetTop - 80; // Account for navbar height
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
 });
 
@@ -96,71 +105,84 @@ window.addEventListener('scroll', revealOnScroll);
 // TEAM MODAL
 // ========================================
 
-const teamMembers = document.querySelectorAll('.team-member');
-const teamModal = document.getElementById('teamModal');
-const modalClose = document.getElementById('modalClose');
-const modalImage = document.getElementById('modalImage');
-const modalName = document.getElementById('modalName');
-const modalRole = document.getElementById('modalRole');
-const modalSpecialty = document.getElementById('modalSpecialty');
-const modalBio = document.getElementById('modalBio');
-const modalFocus = document.getElementById('modalFocus');
-const modalCTA = document.getElementById('modalCTA');
-const modalCTAText = document.getElementById('modalCTAText');
+document.addEventListener('DOMContentLoaded', () => {
+    const teamMembers = document.querySelectorAll('.team-member');
+    const teamModal = document.getElementById('teamModal');
+    const modalClose = document.getElementById('modalClose');
+    const modalImage = document.getElementById('modalImage');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalSpecialty = document.getElementById('modalSpecialty');
+    const modalBio = document.getElementById('modalBio');
+    const modalFocus = document.getElementById('modalFocus');
+    const modalCTA = document.getElementById('modalCTA');
+    const modalCTAText = document.getElementById('modalCTAText');
 
-// WhatsApp reception number
-const whatsappNumber = '59898213627';
+    // WhatsApp reception number
+    const whatsappNumber = '59898213627';
 
-// Open modal when clicking team member
-teamMembers.forEach(member => {
-    member.addEventListener('click', () => {
-        const name = member.dataset.name;
-        const role = member.dataset.role;
-        const specialty = member.dataset.specialty;
-        const image = member.dataset.image;
-        const bio = member.dataset.bio;
-        const focus = member.dataset.focus;
-        
-        // Populate modal with data
-        modalImage.style.backgroundImage = `url('${image}')`;
-        modalName.textContent = name;
-        modalRole.textContent = role;
-        modalSpecialty.textContent = specialty;
-        modalBio.innerHTML = bio;
-        modalFocus.innerHTML = focus;
-        
-        // Update CTA button
-        modalCTAText.textContent = `Atender con ${name.split(' ').slice(1).join(' ')}`;
-        const whatsappMessage = `Hola, Quiero atenderme con ${name}`;
-        modalCTA.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-        modalCTA.target = '_blank';
-        
-        // Show modal
-        teamModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    // Debug: verificar que los elementos existen
+    console.log('Team members encontrados:', teamMembers.length);
+    console.log('Modal existe:', teamModal !== null);
+
+    // Open modal when clicking team member
+    teamMembers.forEach(member => {
+        member.addEventListener('click', () => {
+            console.log('Click en miembro del equipo');
+            const name = member.dataset.name;
+            const role = member.dataset.role;
+            const specialty = member.dataset.specialty;
+            const image = member.dataset.image;
+            const bio = member.dataset.bio;
+            const focus = member.dataset.focus;
+            
+            // Populate modal with data
+            modalImage.style.backgroundImage = `url('${image}')`;
+            modalName.textContent = name;
+            modalRole.textContent = role;
+            modalSpecialty.textContent = specialty;
+            modalBio.innerHTML = bio;
+            modalFocus.innerHTML = focus;
+            
+            // Update CTA button
+            modalCTAText.textContent = `Atender con ${name.split(' ').slice(1).join(' ')}`;
+            const whatsappMessage = `Hola, Quiero atenderme con ${name}`;
+            modalCTA.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            modalCTA.target = '_blank';
+            
+            console.log('Link de WhatsApp:', modalCTA.href);
+            
+            // Show modal
+            teamModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
     });
-});
 
-// Close modal
-const closeModal = () => {
-    teamModal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-};
+    // Close modal
+    const closeModal = () => {
+        teamModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
 
-modalClose.addEventListener('click', closeModal);
-
-// Close modal when clicking outside
-teamModal.addEventListener('click', (e) => {
-    if (e.target === teamModal) {
-        closeModal();
+    if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
     }
-});
 
-// Close modal with Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && teamModal.classList.contains('active')) {
-        closeModal();
+    // Close modal when clicking outside
+    if (teamModal) {
+        teamModal.addEventListener('click', (e) => {
+            if (e.target === teamModal) {
+                closeModal();
+            }
+        });
     }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && teamModal && teamModal.classList.contains('active')) {
+            closeModal();
+        }
+    });
 });
 
 // ========================================
