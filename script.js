@@ -127,7 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Open modal when clicking team member
     teamMembers.forEach(member => {
-        member.addEventListener('click', () => {
+        member.addEventListener('click', (e) => {
+            // Don't open modal for surprise member
+            if (member.classList.contains('team-member-surprise')) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Surprise member clicked - blocked');
+                return;
+            }
+            
             console.log('Click en miembro del equipo');
             const name = member.dataset.name;
             const role = member.dataset.role;
@@ -283,3 +291,95 @@ if ('IntersectionObserver' in window) {
 
 console.log('%c🏥 Welcome to Avant Health & Wellness', 'font-size: 16px; font-weight: bold; color: #c9a55c;');
 console.log('%cTransform your health today.', 'font-size: 12px; color: #b0b0b0;');
+
+// ========================================
+// COUNTDOWN TIMER FOR SURPRISE MEMBER
+// ========================================
+
+function initCountdown() {
+    const surpriseMember = document.querySelector('.team-member-surprise');
+    if (!surpriseMember) {
+        console.log('No surprise member found');
+        return;
+    }
+    
+    const countdownTimer = document.getElementById('countdown-timer');
+    if (!countdownTimer) {
+        console.log('No countdown timer found');
+        return;
+    }
+
+    console.log('Initializing countdown...');
+    const revealDateStr = surpriseMember.dataset.revealDate;
+    const revealDate = new Date(revealDateStr).getTime();
+    
+    console.log('Reveal date:', revealDateStr);
+    console.log('Reveal timestamp:', revealDate);
+    console.log('Current timestamp:', new Date().getTime());
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+        console.log('Missing countdown elements');
+        console.log('days:', daysEl, 'hours:', hoursEl, 'minutes:', minutesEl, 'seconds:', secondsEl);
+        return;
+    }
+    
+    console.log('All countdown elements found!');
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = revealDate - now;
+
+        if (distance < 0) {
+            // Reveal the member
+            surpriseMember.classList.remove('team-member-surprise');
+            const overlay = surpriseMember.querySelector('.surprise-overlay');
+            const lockedImage = surpriseMember.querySelector('.team-image-locked');
+            const hiddenInfo = surpriseMember.querySelector('.team-info-hidden');
+            
+            if (overlay) overlay.remove();
+            if (lockedImage) lockedImage.classList.remove('team-image-locked');
+            if (hiddenInfo) {
+                hiddenInfo.classList.remove('team-info-hidden');
+                hiddenInfo.innerHTML = `
+                    <h3 class="team-name">Lic. Kine Jota</h3>
+                    <p class="team-role">Kinesiólogo</p>
+                    <p class="team-specialty">Rehabilitación, reintegro al deporte y entrenamiento para la salud</p>
+                `;
+            }
+            surpriseMember.style.pointerEvents = 'auto';
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        console.log('Countdown:', days, 'days', hours, 'hours', minutes, 'min', seconds, 'sec');
+
+        daysEl.textContent = String(days).padStart(2, '0');
+        hoursEl.textContent = String(hours).padStart(2, '0');
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    // Update immediately
+    console.log('Starting countdown updates...');
+    updateCountdown();
+
+    // Update every second
+    setInterval(updateCountdown, 1000);
+    console.log('Countdown interval set!');
+}
+
+// Initialize countdown when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCountdown);
+} else {
+    initCountdown();
+}

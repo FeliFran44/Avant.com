@@ -267,10 +267,10 @@
                 <div class="team-member scroll-reveal" 
                      data-name="Lic. Agustin Matonte"
                      data-role="Fisioterapeuta"
-                     data-specialty="Dolor Agudo y Crónico"
+                     data-specialty="Fisioterapeuta – Dolor, rendimiento y experiencia humana"
                      data-image="./imagenes/agus.jpeg"
-                     data-bio="<p>Licenciado en Fisioterapia con más de 10 años de experiencia en el tratamiento del dolor agudo y crónico. Mi pasión es ayudar a las personas a recuperar su calidad de vida a través de técnicas innovadoras y un enfoque personalizado.</p><p>Me especialicé en neurociencias del dolor y terapia manual, buscando siempre la causa raíz del malestar para brindar soluciones duraderas.</p>"
-                     data-focus="<p>Mi enfoque se centra en el manejo integral del dolor, combinando evaluación exhaustiva, educación del paciente y técnicas de intervención basadas en evidencia.</p><p>Trabajo con dolor lumbar, cervical, migrañas, dolor neuropático y condiciones de dolor persistente. Cada sesión está diseñada específicamente para vos y tus necesidades.</p>">
+                     data-bio="<p>Fisioterapeuta por la Universidad Católica del Uruguay.</p><p>Miembro de la Sociedad Uruguaya de Fisioterapia Especializada en Dolor (SUFED) y conferencista en congresos nacionales e internacionales sobre fisioterapia actualizada y ciencia del dolor.</p><p>Mi práctica combina evidencia, criterio clínico y acompañamiento humano, con el propósito de ayudar a las personas a moverse mejor y recuperar confianza en su cuerpo.</p>"
+                     data-focus="<p>Trabajo en el abordaje del dolor y la rehabilitación funcional desde una mirada moderna, integrando ejercicio, educación y razonamiento clínico.</p><p>Cada proceso se diseña junto a la persona, priorizando su contexto, sus valores y su capacidad de adaptación.</p>">
                     <div class="team-image" style="background-image: url('./imagenes/agus.jpeg')"></div>
                     <div class="team-info">
                         <h3 class="team-name">Lic. Agustin Matonte</h3>
@@ -306,18 +306,34 @@
                         <p class="team-specialty">Dolor, Movimiento y Recuperación</p>
                     </div>
                 </div>
-                <div class="team-member scroll-reveal"
-                     data-name="Lic. Kine Jota"
-                     data-role="Kinesiólogo"
-                     data-specialty="Rehabilitación, Rendimiento y Bienestar Físico"
-                     data-image="./imagenes/kine.png"
-                     data-bio="<p>Kinesiólogo especializado en optimización del rendimiento físico y bienestar integral. Mi enfoque combina la rehabilitación tradicional con estrategias de entrenamiento funcional.</p><p>Trabajo con personas de todas las edades que buscan no solo recuperarse, sino también alcanzar su mejor versión física y prevenir futuras lesiones.</p>"
-                     data-focus="<p>Me dedico a crear programas de rehabilitación que van más allá de la recuperación básica, integrando ejercicio terapéutico, fortalecimiento y movilidad.</p><p>Mi objetivo es que cada paciente no solo se recupere, sino que mejore su calidad de vida, rendimiento físico y bienestar general a largo plazo.</p>">
-                    <div class="team-image" style="background-image: url('./imagenes/kine.png')"></div>
+                <div class="team-member team-surprise-locked" style="pointer-events: none;">
+                    <div class="surprise-box">
+                        <div class="surprise-icon" style="font-size: 4rem; margin-bottom: 1rem;">🎁</div>
+                        <h3 class="surprise-title" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #1a1a1a;">Nuevo Profesional</h3>
+                        <p class="surprise-subtitle" style="font-size: 1rem; margin-bottom: 1.5rem; color: #1a1a1a;">Se revela en:</p>
+                        <div class="countdown-display">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdown-days">47</span>
+                                <span class="countdown-label">Días</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdown-hours">00</span>
+                                <span class="countdown-label">Horas</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdown-minutes">00</span>
+                                <span class="countdown-label">Min</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdown-seconds">00</span>
+                                <span class="countdown-label">Seg</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="team-info">
-                        <h3 class="team-name">Lic. Kine Jota</h3>
-                        <p class="team-role">Kinesiólogo</p>
-                        <p class="team-specialty">Rehabilitación, Rendimiento y Bienestar Físico</p>
+                        <h3 class="team-name">???</h3>
+                        <p class="team-role">Próximamente</p>
+                        <p class="team-specialty">10 de Enero 2026</p>
                     </div>
                 </div>
             </div>
@@ -472,5 +488,101 @@
     </a>
 
     <script src="script.js"></script>
+    <script>
+    // Countdown timer
+    const countdownDays = document.getElementById('countdown-days');
+    if (countdownDays) {
+        setInterval(function() {
+            const target = new Date('2026-01-10T00:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+            
+            if (diff < 0) return;
+            
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-days').textContent = String(d).padStart(2, '0');
+            document.getElementById('countdown-hours').textContent = String(h).padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = String(m).padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = String(s).padStart(2, '0');
+        }, 1000);
+    }
+    
+    // Comando secreto - desbloqueo temporal
+    let secretCode = '';
+    document.addEventListener('keypress', function(e) {
+        secretCode += e.key.toLowerCase();
+        if (secretCode.length > 8) secretCode = secretCode.slice(-8);
+        
+        if (secretCode.includes('kinejota')) {
+            const surpriseCard = document.querySelector('.team-surprise-locked');
+            if (surpriseCard) {
+                surpriseCard.outerHTML = `
+                    <div class="team-member scroll-reveal revealed"
+                         data-name="Lic. Kine Jota"
+                         data-role="Kinesiólogo"
+                         data-specialty="Rehabilitación, Rendimiento y Bienestar Físico"
+                         data-image="./imagenes/kine.png"
+                         data-bio="<p>Licenciado en Kinesiología y Magíster en Ciencias de la Actividad Física y del Deporte, con más de 10 años de experiencia en el abordaje de lesiones musculoesqueléticas en general, procesos pre y post operatorios, y desarrollo del rendimiento físico.</p><p>Trabajo desde adolescentes a personas mayores, combinando la evidencia científica, la experiencia clínica y las preferencias individuales para ofrecer intervenciones seguras y costo-eficientes.</p>"
+                         data-focus="<p>Me dedico a la rehabilitación y al reintegro a la actividad física o deportiva, diseñando programas a medida y entrenamiento orientado a la salud.</p><p>Mi enfoque se centra en el movimiento, la fuerza, el acondicionamiento físico, la educación del paciente y otras intervenciones complementarias que favorecen el bienestar, calidad de vida y rendimiento.</p>">
+                        <div class="team-image" style="background-image: url('./imagenes/kine.png')"></div>
+                        <div class="team-info">
+                            <h3 class="team-name">Lic. Kine Jota</h3>
+                            <p class="team-role">Kinesiólogo</p>
+                            <p class="team-specialty">Rehabilitación, reintegro al deporte y entrenamiento para la salud</p>
+                        </div>
+                    </div>
+                `;
+                console.log('🎉 ¡Card desbloqueada! Hacé scroll para verla.');
+                secretCode = '';
+                
+                // Agregar event listener para el modal
+                setTimeout(() => {
+                    const newCard = document.querySelector('.team-member[data-name="Lic. Kine Jota"]');
+                    const teamModal = document.getElementById('teamModal');
+                    const modalImage = document.getElementById('modalImage');
+                    const modalName = document.getElementById('modalName');
+                    const modalRole = document.getElementById('modalRole');
+                    const modalSpecialty = document.getElementById('modalSpecialty');
+                    const modalBio = document.getElementById('modalBio');
+                    const modalFocus = document.getElementById('modalFocus');
+                    const modalCTA = document.getElementById('modalCTA');
+                    const modalCTAText = document.getElementById('modalCTAText');
+                    const whatsappNumber = '59898213627';
+                    
+                    if (newCard && teamModal) {
+                        newCard.addEventListener('click', () => {
+                            const name = newCard.dataset.name;
+                            const role = newCard.dataset.role;
+                            const specialty = newCard.dataset.specialty;
+                            const image = newCard.dataset.image;
+                            const bio = newCard.dataset.bio;
+                            const focus = newCard.dataset.focus;
+                            
+                            modalImage.style.backgroundImage = `url('${image}')`;
+                            modalName.textContent = name;
+                            modalRole.textContent = role;
+                            modalSpecialty.textContent = specialty;
+                            modalBio.innerHTML = bio;
+                            modalFocus.innerHTML = focus;
+                            
+                            modalCTAText.textContent = `Atender con ${name.split(' ').slice(1).join(' ')}`;
+                            const whatsappMessage = `Hola, Quiero atenderme con ${name}`;
+                            modalCTA.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+                            modalCTA.target = '_blank';
+                            
+                            teamModal.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        });
+                        console.log('✅ Modal configurado correctamente');
+                    }
+                }, 100);
+            }
+        }
+    });
+    </script>
 </body>
 </html>
